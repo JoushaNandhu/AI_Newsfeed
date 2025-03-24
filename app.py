@@ -46,6 +46,10 @@ def extract_json(text):
 
 # Function to call Perplexity API
 def call_perplexity_api(prompt):
+    if not PERPLEXITY_API_KEY:
+        print("Error: PERPLEXITY_API_KEY environment variable not set")
+        return None
+        
     headers = {
         "Authorization": f"Bearer {PERPLEXITY_API_KEY}",
         "Content-Type": "application/json"
@@ -164,6 +168,6 @@ def get_news():
     
     return jsonify(result)
 
-# This is needed for Vercel
+# Development server
 if __name__ == '__main__':
-    app.run()
+    app.run(debug=True)
