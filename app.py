@@ -168,5 +168,9 @@ def get_news():
     
     return jsonify(result)
 
+# For Vercel deployment
+app.debug = False  # Turn off debug mode for production
+
+# This code is only executed when running locally, not on Vercel
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(host='0.0.0.0', port=int(os.environ.get('PORT', 8080)))
