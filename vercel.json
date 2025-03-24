@@ -11,8 +11,5 @@
       "src": "/(.*)",
       "dest": "/app.py"
     }
-  ],
-  "env": {
-    "PERPLEXITY_API_KEY": "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"
-  }
+  ]
 }
