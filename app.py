@@ -4,16 +4,12 @@ import time
 import re
 import requests
 import os
-from dotenv import load_dotenv
 from flask import Flask, render_template, request, jsonify
-
-# Load environment variables from .env file if exists
-load_dotenv()
 
 app = Flask(__name__)
 
-# Get API key from environment variables or use hardcoded value
-PERPLEXITY_API_KEY = os.getenv("PERPLEXITY_API_KEY")
+# Get API key from environment variables
+PERPLEXITY_API_KEY = os.environ.get("PERPLEXITY_API_KEY")
 
 # Function to extract JSON from text that might have extra content
 def extract_json(text):
@@ -56,7 +52,7 @@ def call_perplexity_api(prompt):
     }
     
     data = {
-        "model": "llama-3.1-sonar-small-128k-online",  # Using the more cost-efficient model with good performance
+        "model": "llama-3.1-sonar-small-128k-online",
         "messages": [
             {"role": "system", "content": "You are an AI research system that identifies worldwide AI developments and news. You respond with valid JSON only."},
             {"role": "user", "content": prompt}
@@ -168,9 +164,6 @@ def get_news():
     
     return jsonify(result)
 
-# For Vercel deployment
-app.debug = False  # Turn off debug mode for production
-
-# This code is only executed when running locally, not on Vercel
+# This is needed for Vercel
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=int(os.environ.get('PORT', 8080)))
+    app.run()
